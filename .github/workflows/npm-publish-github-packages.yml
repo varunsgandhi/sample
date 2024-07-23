@@ -19,6 +19,7 @@ jobs:
         working-directory: ./dummy-package-2.4.4
       - name: Create .tgz file
         run: npm pack
+        working-directory: ./dummy-package-2.4.4
 
   push:
     needs: build
