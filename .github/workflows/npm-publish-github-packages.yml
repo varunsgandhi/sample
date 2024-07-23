@@ -1,0 +1,33 @@
+name: Node.js Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npm test
+      - name: Create zip file
+        run: zip -r project.zip .
+      - name: Upload zip to third-party platform
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "rpm"
+          owner: "interview-varun-gandhi"
+          repo: "cloudsmith-ci-cd-assessment"
+          distro: "any-distro"
+          version: "any-version"
+          republish: "true" # needed ONLY if version is not changing
+          file: "./project.zip" #real file that will repeat versions
+
