@@ -20,19 +20,19 @@ jobs:
       - name: Create zip file
         run: zip -r project.zip .
 
-  publish-gpr:
+  push:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
         with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "npm"
+          owner: "interview-varun-gandhi"
+          repo: "cloudsmith-ci-cd-assessment"
+          republish: "true" # needed ONLY if version is not changing
+          file: "project.zip" # Ensure this matches the zip file created in the build step
