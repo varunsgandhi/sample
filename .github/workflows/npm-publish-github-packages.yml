@@ -18,7 +18,7 @@ jobs:
       - run: npm install
         working-directory: ./dummy-package-2.4.4
       - name: Create zip file
-        run: zip -r project.zip .
+        run: npm pack project.tgz .
 
   push:
     needs: build
@@ -35,4 +35,4 @@ jobs:
           owner: "interview-varun-gandhi"
           repo: "cloudsmith-ci-cd-assessment"
           republish: "true" # needed ONLY if version is not changing
-          file: "project.zip" # Ensure this matches the zip file created in the build step
+          file: "project.tgz" # Ensure this matches the zip file created in the build step
