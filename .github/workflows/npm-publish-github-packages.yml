@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-        working-directory: ./app
+        working-directory: ./dummy-package-2.4.4
       - run: npm test
       - name: Create zip file
         run: zip -r project.zip .
