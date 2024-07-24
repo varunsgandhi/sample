@@ -20,12 +20,22 @@ jobs:
       - name: Create .tgz file
         run: npm pack
         working-directory: ./dummy-package
+      - name: Upload .tgz artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: package-tgz
+          path: ./dummy-package/*.tgz
 
   push:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Download .tgz artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: package-tgz
+          path: ./dummy-package
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -36,5 +46,5 @@ jobs:
           owner: "interview-varun-gandhi"
           repo: "cloudsmith-ci-cd-assessment"
           republish: "true" # needed ONLY if version is not changing
-          file: "*.tgz" # Ensure this matches the zip file created in the build step
+          file:  "./dummy-package/*.tgz" # Ensure this matches the zip file created in the build step
           
