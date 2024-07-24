@@ -43,7 +43,7 @@ jobs:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
           command: "push"
           format: "npm"
-          owner: "~workspace-for-interview-varun"
+          owner: "workspace-for-interview-varun"
           repo: "cloudsmith-ci-cd-assessment"
           republish: "true" # needed ONLY if version is not changing
           file:  "./dummy-package/*.tgz" # Ensure this matches the zip file created in the build step
